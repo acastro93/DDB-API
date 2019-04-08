@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="isTangible" Type="bit" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="20" />
+          <Property Name="assetType" Type="varchar" MaxLength="20" />
+          <Property Name="assetName" Type="varchar" MaxLength="20" />
+          <Property Name="assetDescription" Type="varchar" MaxLength="100" />
+          <Property Name="assetState" Type="varchar" MaxLength="20" />
+          <Property Name="assetLocation" Type="varchar" MaxLength="20" />
+          <Property Name="acquisitionValue" Type="int" />
+          <Property Name="warrantyTime" Type="int" />
+          <Property Name="assetLifeTime" Type="int" />
+          <Property Name="deprecation" Type="int" />
+          <Property Name="salvageValue" Type="int" />
+          <Property Name="acquisitionDate" Type="datetime" />
+          <Property Name="registrationDate" Type="datetime" />
+          <Property Name="picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="AssignedTo">
+          <Key>
+            <PropertyRef Name="assetId" />
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="assetId" Type="int" Nullable="false" />
+          <Property Name="employeeID" Type="int" Nullable="false" />
+          <Property Name="assignationDate" Type="datetime" />
+          <Property Name="branchID" Type="int" />
+          <Property Name="assignationLocation" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="branchName" Type="varchar" MaxLength="20" />
+          <Property Name="branchDescription" Type="varchar" MaxLength="100" />
+          <Property Name="province" Type="varchar" MaxLength="20" />
+          <Property Name="canton" Type="varchar" MaxLength="20" />
+          <Property Name="district" Type="varchar" MaxLength="20" />
+          <Property Name="branchLocation" Type="varchar" MaxLength="100" />
+          <Property Name="branchState" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="20" />
+          <Property Name="middleName" Type="varchar" MaxLength="20" />
+          <Property Name="lastName1" Type="varchar" MaxLength="20" />
+          <Property Name="lastName2" Type="varchar" MaxLength="20" />
+          <Property Name="birthDate" Type="datetime" />
+          <Property Name="employeeState" Type="varchar" MaxLength="20" />
+          <Property Name="startDate" Type="datetime" />
+          <Property Name="picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="locatedIn">
+          <Key>
+            <PropertyRef Name="assetId" />
+            <PropertyRef Name="branchId" />
+          </Key>
+          <Property Name="assetId" Type="int" Nullable="false" />
+          <Property Name="branchId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManagesBranch">
+          <Key>
+            <PropertyRef Name="managerId" />
+            <PropertyRef Name="branchId" />
+          </Key>
+          <Property Name="managerId" Type="int" Nullable="false" />
+          <Property Name="startDate" Type="datetime" />
+          <Property Name="branchId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="userPassword" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="employeeID" Type="int" />
+          <Property Name="accessLevel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorksAt">
+          <Key>
+            <PropertyRef Name="employeeId" />
+            <PropertyRef Name="branchId" />
+          </Key>
+          <Property Name="employeeId" Type="int" Nullable="false" />
+          <Property Name="branchId" Type="int" Nullable="false" />
+          <Property Name="department" Type="varchar" MaxLength="20" />
+          <Property Name="position" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__AssignedT__asset__440B1D61">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="assetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssignedT__branc__45F365D3">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="branchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssignedT__emplo__44FF419A">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locatedIn__asset__403A8C7D">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="locatedIn" Type="Self.locatedIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="locatedIn">
+              <PropertyRef Name="assetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locatedIn__branc__412EB0B6">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="locatedIn" Type="Self.locatedIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="locatedIn">
+              <PropertyRef Name="branchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagesBr__branc__49C3F6B7">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="ManagesBranch" Type="Self.ManagesBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ManagesBranch">
+              <PropertyRef Name="branchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagesBr__manag__48CFD27E">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ManagesBranch" Type="Self.ManagesBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ManagesBranch">
+              <PropertyRef Name="managerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLogin__emplo__3D5E1FD2">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorksAt__branchI__4D94879B">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="WorksAt" Type="Self.WorksAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorksAt">
+              <PropertyRef Name="branchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorksAt__employe__4CA06362">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="WorksAt" Type="Self.WorksAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorksAt">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbModelStoreContainer">
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssignedTo" EntityType="Self.AssignedTo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="locatedIn" EntityType="Self.locatedIn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagesBranch" EntityType="Self.ManagesBranch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorksAt" EntityType="Self.WorksAt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AssignedT__asset__440B1D61" Association="Self.FK__AssignedT__asset__440B1D61">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssignedT__branc__45F365D3" Association="Self.FK__AssignedT__branc__45F365D3">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssignedT__emplo__44FF419A" Association="Self.FK__AssignedT__emplo__44FF419A">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locatedIn__asset__403A8C7D" Association="Self.FK__locatedIn__asset__403A8C7D">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="locatedIn" EntitySet="locatedIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locatedIn__branc__412EB0B6" Association="Self.FK__locatedIn__branc__412EB0B6">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="locatedIn" EntitySet="locatedIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagesBr__branc__49C3F6B7" Association="Self.FK__ManagesBr__branc__49C3F6B7">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="ManagesBranch" EntitySet="ManagesBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagesBr__manag__48CFD27E" Association="Self.FK__ManagesBr__manag__48CFD27E">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ManagesBranch" EntitySet="ManagesBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLogin__emplo__3D5E1FD2" Association="Self.FK__UserLogin__emplo__3D5E1FD2">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorksAt__branchI__4D94879B" Association="Self.FK__WorksAt__branchI__4D94879B">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="WorksAt" EntitySet="WorksAt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorksAt__employe__4CA06362" Association="Self.FK__WorksAt__employe__4CA06362">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="WorksAt" EntitySet="WorksAt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="isTangible" Type="Boolean" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="assetType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="assetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="assetDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="assetState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="assetLocation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="acquisitionValue" Type="Int32" />
+          <Property Name="warrantyTime" Type="Int32" />
+          <Property Name="assetLifeTime" Type="Int32" />
+          <Property Name="deprecation" Type="Int32" />
+          <Property Name="salvageValue" Type="Int32" />
+          <Property Name="acquisitionDate" Type="DateTime" Precision="3" />
+          <Property Name="registrationDate" Type="DateTime" Precision="3" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="AssignedTo" Relationship="Self.FK__AssignedT__asset__440B1D61" FromRole="Asset" ToRole="AssignedTo" />
+          <NavigationProperty Name="Branch" Relationship="Self.locatedIn" FromRole="Asset" ToRole="Branch" />
+        </EntityType>
+        <EntityType Name="AssignedTo">
+          <Key>
+            <PropertyRef Name="assetId" />
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="assetId" Type="Int32" Nullable="false" />
+          <Property Name="employeeID" Type="Int32" Nullable="false" />
+          <Property Name="assignationDate" Type="DateTime" Precision="3" />
+          <Property Name="branchID" Type="Int32" />
+          <Property Name="assignationLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK__AssignedT__asset__440B1D61" FromRole="AssignedTo" ToRole="Asset" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__AssignedT__branc__45F365D3" FromRole="AssignedTo" ToRole="Branch" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__AssignedT__emplo__44FF419A" FromRole="AssignedTo" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="branchName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="branchDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="province" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="canton" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="district" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="branchLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="branchState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AssignedTo" Relationship="Self.FK__AssignedT__branc__45F365D3" FromRole="Branch" ToRole="AssignedTo" />
+          <NavigationProperty Name="ManagesBranch" Relationship="Self.FK__ManagesBr__branc__49C3F6B7" FromRole="Branch" ToRole="ManagesBranch" />
+          <NavigationProperty Name="WorksAt" Relationship="Self.FK__WorksAt__branchI__4D94879B" FromRole="Branch" ToRole="WorksAt" />
+          <NavigationProperty Name="Asset" Relationship="Self.locatedIn" FromRole="Branch" ToRole="Asset" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastName1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastName2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="3" />
+          <Property Name="employeeState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="AssignedTo" Relationship="Self.FK__AssignedT__emplo__44FF419A" FromRole="Employee" ToRole="AssignedTo" />
+          <NavigationProperty Name="ManagesBranch" Relationship="Self.FK__ManagesBr__manag__48CFD27E" FromRole="Employee" ToRole="ManagesBranch" />
+          <NavigationProperty Name="UserLogin" Relationship="Self.FK__UserLogin__emplo__3D5E1FD2" FromRole="Employee" ToRole="UserLogin" />
+          <NavigationProperty Name="WorksAt" Relationship="Self.FK__WorksAt__employe__4CA06362" FromRole="Employee" ToRole="WorksAt" />
+        </EntityType>
+        <EntityType Name="ManagesBranch">
+          <Key>
+            <PropertyRef Name="managerId" />
+            <PropertyRef Name="branchId" />
+          </Key>
+          <Property Name="managerId" Type="Int32" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
+          <Property Name="branchId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__ManagesBr__branc__49C3F6B7" FromRole="ManagesBranch" ToRole="Branch" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__ManagesBr__manag__48CFD27E" FromRole="ManagesBranch" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="employeeID" Type="Int32" />
+          <Property Name="accessLevel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__UserLogin__emplo__3D5E1FD2" FromRole="UserLogin" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="WorksAt">
+          <Key>
+            <PropertyRef Name="employeeId" />
+            <PropertyRef Name="branchId" />
+          </Key>
+          <Property Name="employeeId" Type="Int32" Nullable="false" />
+          <Property Name="branchId" Type="Int32" Nullable="false" />
+          <Property Name="department" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__WorksAt__branchI__4D94879B" FromRole="WorksAt" ToRole="Branch" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__WorksAt__employe__4CA06362" FromRole="WorksAt" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK__AssignedT__asset__440B1D61">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="assetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssignedT__branc__45F365D3">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="branchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssignedT__emplo__44FF419A">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="AssignedTo" Type="Self.AssignedTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AssignedTo">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagesBr__branc__49C3F6B7">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="ManagesBranch" Type="Self.ManagesBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ManagesBranch">
+              <PropertyRef Name="branchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorksAt__branchI__4D94879B">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="WorksAt" Type="Self.WorksAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorksAt">
+              <PropertyRef Name="branchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagesBr__manag__48CFD27E">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ManagesBranch" Type="Self.ManagesBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ManagesBranch">
+              <PropertyRef Name="managerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLogin__emplo__3D5E1FD2">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorksAt__employe__4CA06362">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="WorksAt" Type="Self.WorksAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorksAt">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="locatedIn">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Asset" EntityType="Self.Asset" />
+          <EntitySet Name="AssignedTo" EntityType="Self.AssignedTo" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="ManagesBranch" EntityType="Self.ManagesBranch" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" />
+          <EntitySet Name="WorksAt" EntityType="Self.WorksAt" />
+          <AssociationSet Name="FK__AssignedT__asset__440B1D61" Association="Self.FK__AssignedT__asset__440B1D61">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssignedT__branc__45F365D3" Association="Self.FK__AssignedT__branc__45F365D3">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssignedT__emplo__44FF419A" Association="Self.FK__AssignedT__emplo__44FF419A">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="AssignedTo" EntitySet="AssignedTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagesBr__branc__49C3F6B7" Association="Self.FK__ManagesBr__branc__49C3F6B7">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="ManagesBranch" EntitySet="ManagesBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorksAt__branchI__4D94879B" Association="Self.FK__WorksAt__branchI__4D94879B">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="WorksAt" EntitySet="WorksAt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagesBr__manag__48CFD27E" Association="Self.FK__ManagesBr__manag__48CFD27E">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ManagesBranch" EntitySet="ManagesBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLogin__emplo__3D5E1FD2" Association="Self.FK__UserLogin__emplo__3D5E1FD2">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorksAt__employe__4CA06362" Association="Self.FK__WorksAt__employe__4CA06362">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="WorksAt" EntitySet="WorksAt" />
+          </AssociationSet>
+          <AssociationSet Name="locatedIn" Association="Self.locatedIn">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Branch" EntitySet="Branch" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="Asset">
+            <EntityTypeMapping TypeName="dbModel.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="isTangible" ColumnName="isTangible" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="assetType" ColumnName="assetType" />
+                <ScalarProperty Name="assetName" ColumnName="assetName" />
+                <ScalarProperty Name="assetDescription" ColumnName="assetDescription" />
+                <ScalarProperty Name="assetState" ColumnName="assetState" />
+                <ScalarProperty Name="assetLocation" ColumnName="assetLocation" />
+                <ScalarProperty Name="acquisitionValue" ColumnName="acquisitionValue" />
+                <ScalarProperty Name="warrantyTime" ColumnName="warrantyTime" />
+                <ScalarProperty Name="assetLifeTime" ColumnName="assetLifeTime" />
+                <ScalarProperty Name="deprecation" ColumnName="deprecation" />
+                <ScalarProperty Name="salvageValue" ColumnName="salvageValue" />
+                <ScalarProperty Name="acquisitionDate" ColumnName="acquisitionDate" />
+                <ScalarProperty Name="registrationDate" ColumnName="registrationDate" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssignedTo">
+            <EntityTypeMapping TypeName="dbModel.AssignedTo">
+              <MappingFragment StoreEntitySet="AssignedTo">
+                <ScalarProperty Name="assetId" ColumnName="assetId" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="assignationDate" ColumnName="assignationDate" />
+                <ScalarProperty Name="branchID" ColumnName="branchID" />
+                <ScalarProperty Name="assignationLocation" ColumnName="assignationLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branch">
+            <EntityTypeMapping TypeName="dbModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="branchDescription" ColumnName="branchDescription" />
+                <ScalarProperty Name="province" ColumnName="province" />
+                <ScalarProperty Name="canton" ColumnName="canton" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="branchLocation" ColumnName="branchLocation" />
+                <ScalarProperty Name="branchState" ColumnName="branchState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="dbModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="middleName" ColumnName="middleName" />
+                <ScalarProperty Name="lastName1" ColumnName="lastName1" />
+                <ScalarProperty Name="lastName2" ColumnName="lastName2" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="employeeState" ColumnName="employeeState" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManagesBranch">
+            <EntityTypeMapping TypeName="dbModel.ManagesBranch">
+              <MappingFragment StoreEntitySet="ManagesBranch">
+                <ScalarProperty Name="managerId" ColumnName="managerId" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="branchId" ColumnName="branchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogin">
+            <EntityTypeMapping TypeName="dbModel.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="accessLevel" ColumnName="accessLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorksAt">
+            <EntityTypeMapping TypeName="dbModel.WorksAt">
+              <MappingFragment StoreEntitySet="WorksAt">
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="branchId" ColumnName="branchId" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="position" ColumnName="position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="locatedIn" TypeName="dbModel.locatedIn" StoreEntitySet="locatedIn">
+            <EndProperty Name="Asset">
+              <ScalarProperty Name="id" ColumnName="assetId" />
+            </EndProperty>
+            <EndProperty Name="Branch">
+              <ScalarProperty Name="id" ColumnName="branchId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

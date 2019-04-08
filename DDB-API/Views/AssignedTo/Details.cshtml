@@ -1,0 +1,58 @@
+﻿@model DDB_API.Models.AssignedTo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AssignedTo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.assignationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.assignationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.assignationLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.assignationLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asset.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asset.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch.branchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.branchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.firstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

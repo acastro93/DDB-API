@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2239fbc2271a4559b2e5d647b85ee08f" Name="Diagram1">
+        <EntityTypeShape EntityType="dbModel.Asset" Width="1.5" PointX="1.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.AssignedTo" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.Branch" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.Employee" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.ManagesBranch" Width="1.5" PointX="5.625" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.UserLogin" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.WorksAt" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="dbModel.FK__AssignedT__asset__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__AssignedT__branc__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__AssignedT__emplo__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__ManagesBr__branc__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__WorksAt__branchI__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__ManagesBr__manag__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__UserLogin__emplo__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.FK__WorksAt__employe__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="dbModel.locatedIn" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

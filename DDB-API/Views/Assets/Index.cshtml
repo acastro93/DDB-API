@@ -1,0 +1,116 @@
+﻿@model IEnumerable<DDB_API.Models.Asset>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.isTangible)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.acquisitionValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.warrantyTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.assetLifeTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.deprecation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.salvageValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.acquisitionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.registrationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.picture)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.isTangible)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.acquisitionValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.warrantyTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assetLifeTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.deprecation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salvageValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.acquisitionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.registrationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.picture)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
