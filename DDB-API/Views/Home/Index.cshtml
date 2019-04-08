@@ -6,14 +6,31 @@
             <h2>Login</h2>
             @using (Html.BeginForm("CheckLogin", "UserLogins", FormMethod.Post))
             {
-                
-                <label>Username </label>
-                @Html.EditorFor(model => model.username)
-                <label>Password </label>
-                @Html.PasswordFor(model => model.userPassword)
-
-                <input type="submit" value="Login" class="btn-default" />
-
+                <table>
+                    <tr>
+                        <td>@Html.LabelFor(a => a.username)</td>
+                        <td>@Html.TextBoxFor(a => a.username)</td>
+                        <td>@Html.ValidationMessageFor(a => a.username)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(a => a.userPassword)
+                        </td>
+                        <td>
+                            @Html.PasswordFor(a => a.userPassword)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(a => a.userPassword)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Login" />
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
             }
 
         </div>

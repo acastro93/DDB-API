@@ -28,7 +28,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorksAt worksAt = db.WorksAt.Find(id);
+            WorksAt worksAt = db.WorksAt.Where(assigned => (assigned.employeeId == id)).FirstOrDefault();
             if (worksAt == null)
             {
                 return HttpNotFound();
@@ -70,7 +70,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorksAt worksAt = db.WorksAt.Find(id);
+            WorksAt worksAt = db.WorksAt.Where(assigned => (assigned.employeeId == id)).FirstOrDefault();
             if (worksAt == null)
             {
                 return HttpNotFound();
@@ -105,7 +105,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorksAt worksAt = db.WorksAt.Find(id);
+            WorksAt worksAt = db.WorksAt.Where(assigned => (assigned.employeeId == id)).FirstOrDefault();
             if (worksAt == null)
             {
                 return HttpNotFound();
@@ -118,7 +118,7 @@ namespace DDB_API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            WorksAt worksAt = db.WorksAt.Find(id);
+            WorksAt worksAt = db.WorksAt.Where(assigned => (assigned.employeeId == id)).FirstOrDefault();
             db.WorksAt.Remove(worksAt);
             db.SaveChanges();
             return RedirectToAction("Index");

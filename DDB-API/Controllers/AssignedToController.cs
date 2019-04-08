@@ -28,7 +28,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AssignedTo assignedTo = db.AssignedTo.Find(id);
+            AssignedTo assignedTo = db.AssignedTo.Where(assigned => (assigned.employeeID == id)).FirstOrDefault();
             if (assignedTo == null)
             {
                 return HttpNotFound();
@@ -72,7 +72,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AssignedTo assignedTo = db.AssignedTo.Find(id);
+            AssignedTo assignedTo = db.AssignedTo.Where(assigned => (assigned.employeeID == id)).FirstOrDefault();
             if (assignedTo == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AssignedTo assignedTo = db.AssignedTo.Find(id);
+            AssignedTo assignedTo = db.AssignedTo.Where(assigned => (assigned.employeeID == id)).FirstOrDefault();
             if (assignedTo == null)
             {
                 return HttpNotFound();
@@ -122,7 +122,7 @@ namespace DDB_API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AssignedTo assignedTo = db.AssignedTo.Find(id);
+            AssignedTo assignedTo = db.AssignedTo.Where(assigned => (assigned.employeeID == id)).FirstOrDefault();
             db.AssignedTo.Remove(assignedTo);
             db.SaveChanges();
             return RedirectToAction("Index");

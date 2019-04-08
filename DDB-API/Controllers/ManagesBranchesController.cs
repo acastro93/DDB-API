@@ -28,7 +28,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ManagesBranch managesBranch = db.ManagesBranch.Find(id);
+            ManagesBranch managesBranch = db.ManagesBranch.Where(assigned => (assigned.managerId == id)).FirstOrDefault();
             if (managesBranch == null)
             {
                 return HttpNotFound();
@@ -70,7 +70,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ManagesBranch managesBranch = db.ManagesBranch.Find(id);
+            ManagesBranch managesBranch = db.ManagesBranch.Where(assigned => (assigned.managerId == id)).FirstOrDefault(); ;
             if (managesBranch == null)
             {
                 return HttpNotFound();
@@ -105,7 +105,7 @@ namespace DDB_API.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ManagesBranch managesBranch = db.ManagesBranch.Find(id);
+            ManagesBranch managesBranch = db.ManagesBranch.Where(assigned => (assigned.managerId == id)).FirstOrDefault();
             if (managesBranch == null)
             {
                 return HttpNotFound();
@@ -118,7 +118,7 @@ namespace DDB_API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ManagesBranch managesBranch = db.ManagesBranch.Find(id);
+            ManagesBranch managesBranch = db.ManagesBranch.Where(assigned => (assigned.managerId == id)).FirstOrDefault();
             db.ManagesBranch.Remove(managesBranch);
             db.SaveChanges();
             return RedirectToAction("Index");
